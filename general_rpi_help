@@ -1,0 +1,76 @@
+
+1. Get GUI remote connection using xrdp and X11 (using windows remote control software)
+  
+  sudo apt-get update
+  sudo apt-get upgrade
+  sudo apt-get install xrdp tightvncserver
+  
+2. Get LCD screen to work with RPI:   ==========================================
+
+  sudo git clone https://github.com/waveshare/LCD-show.git
+  cd LCD-show
+  sudo chmod +x LCD35-show      
+  
+  // replace LCD35-show with the proper screen size
+  // edit boot config file and make sure dtoverlay=ads7846 is disabled
+  sudo nano ~/boot/config.txt
+  
+  // Toggle between HDMI and LCD:
+  cd LCD-show
+  ./LCD-hdmi        // for HDMI
+  ./LCD35-show      // for LCD screen
+  
+  
+3. Install RTL-SDR support for RPI:       ===========================================
+  
+   cd ~
+   sudo apt-get install git git-core cmake libusb-1.0-0-dev build-essential
+   git clone git://git.osmocom.org/rtl-sdr.git
+   cd rtl-sdr/ && mkdir build && cd build/
+   cmake ../ -DINSTALL_UDEV_RULES=ON
+   sudo make
+   sudo make install
+   sudo ldconfig
+   cd ~
+   sudo cp ./rtl-sdr/rtl-sdr.rules /etc/udev/rules.d/
+   sudo reboot
+   
+   sudo nano /etc/modprobe.d/no-rtl.conf
+      -> blacklist dvb_usb_rtl28xxu
+      -> blacklist rtl2832
+      -> blacklist rtl2830
+      
+   sudo reboot
+   
+   // PERFORM SOME TESTS:
+   lsusb                    // should return the rtl-sdr dongle at some USB port
+   rtl_test -t              // should not return anything, just make sure its working
+   
+   
+4. Install And Build rtl_433 (software for detecting packets at 433Mhz frequency with an RTL-SDR dongle:
+
+   sudo apt-get install libtool librtsdr-dev rtl-sdr doxygen
+   git clone https://github.com/merbanan/rtl_433.git
+   cd rtl_433/ && mkdir build && cd build && cmake ../ && make
+   sudo make install
+   
+   // Test rtl_433 software using:
+   rtl_433
+   
+   
+5. Install Zerotier One if u wann remote connect to ur RPI without port forwarding (kinda lika a VPN?)
+    
+   curl -s https://install.zerotier.com/ | sudo bash
+   sudo zerotier-cli join <network_hash>                // the hash is obtained when logging in to the zerotier website
+   
+   // Authorize the new device by visitng the zerotier website
+   // This will add a new virtual wireless interface to your RPI which u can see from ifconfig
+   
+   
+6. Create Bash Aliases in the RPI:
+
+   cd ~
+   sudo nano .bash_aliases
+      -> alias la='ls -la'    // example alias
+      
+7. 
