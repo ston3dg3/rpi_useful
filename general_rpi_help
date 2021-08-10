@@ -73,4 +73,60 @@
    sudo nano .bash_aliases
       -> alias la='ls -la'    // example alias
       
-7. 
+7. Install Wifi Adapter drivers for RTL8188 family
+
+   sudo wget https://downloads.fars-robotics.net/wifi-drivers/install-wifi -O /usr/bin/install-wifi
+   sudo chmod +x /usr/bin/install-wifi
+   sudo install-wifi        // Make sure the dongle is plugged in while running this
+                            // it will detect and download the correct driver for ur dongle
+                            
+8. Install aircrack-ng
+
+   sudo apt-get install aircrack-ng
+   
+   
+9. Set up RPI as a router
+
+   sudo apt-get install hostapd
+   sudo systemctl unmask hostapd
+   sudo apt-get install dnsmasq
+   sudo DEBIAN_FRONTEND=noninteractive apt install -y netfilter-persistent iptables-persistent
+   sudo nano /etc/dhcpcd.conf
+      -> interface wlan1
+      ->      static ip_address=192.168.25.1/24     // choose any fitting IP for the router
+      ->      nohook wpa_supplicant
+      
+   sudo nano /etc/sysctl.d/routed-ap.conf
+      -> #Enable IPv4 routing
+      -> net.ipv4.ip_forward=1
+      
+   sudo iptables -t nat -A POSTROUTING -o wlan0 -j MASQUERADE     // instead of wlan0 u can specify eth0 or
+                                                                  // whatever buddy its what ur AP will take
+                                                                  // internet connection from !!
+   sudo netfilter-persistent save
+   sudo mv /etc/dnsmasq.conf /etc/dnsmasq.conf.orig
+   sudo nano /etc/dnsmasq.conf
+      -> interface=wlan1                                          // specify which interface will act as AP
+      -> dhcp-range=192.168.25.2,192.168.25.20,255.255.255.0,24h  // Range then mask then lease time
+      -> domain=wlan
+      -> address=/gw.wlan/192.168.25.1                            // specify addrress of the new AP
+      
+   sudo rfkill unblock wlan
+   sudo nano /etc/hostapd/hostapd.conf
+<===========START OF FILE==============>     
+country-code=PL
+interface=wlan1
+ssid=<Network_name>
+hw_mode=g                     // n is better but go g
+channel=7                     // any channel u want the network on (1-13)
+mcaddr_acl=0
+auth_algs=1
+ignore_broadcast_ssid=0
+wpa=2
+wpa_passphrase=<password>     // minimum 8 characters!!
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
+rsn_pairwise=CCMP
+<==========END OF FILE=================>
+
+
