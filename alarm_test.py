@@ -1,3 +1,8 @@
+#!/bin/
+# Script: alarm_test.py
+# Purpose: test the PIR sensor with a buzzer
+# -------------------------------
+
 from gpiozero import Buzzer
 from gpiozero import MotionSensor
 
