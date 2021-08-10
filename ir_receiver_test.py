@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# Script: ir_receiver_test.py
+# Purpose: test the IR receiver at pin GPIO 23 by printing a count of received data
+# -------------------------------
 
 import RPi.GPIO as GPIO
 
@@ -30,6 +33,7 @@ if __name__ == '__main__':
 		destroy()
 
 
+# UNFINISHED VERSION OF THIS CODE USING ANOTHER LIBRARY (gpiozero)
 #from gpiozero import Button
 #
 #receiver = Button(17)
