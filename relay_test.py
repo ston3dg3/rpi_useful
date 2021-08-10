@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # Script: relay.py
 # Purpose: turn on relay when (pin) is set to HIGH
 
