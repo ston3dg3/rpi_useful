@@ -1,0 +1,30 @@
+Installing Node.js on a raspberry pi to set it up with Blynk
+
+1. First install Node.js
+  1. Remove old versions
+    
+    sudo apt-get purge node nodejs node.js -y
+    sudo apt-get autoremove
+    
+  2. Automatic Node.js installation (adding repositories):
+  
+    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+    sudo apt-get update && sudo apt-get upgrade
+    sudo apt-get install build-essential nodejs -y
+ 
+  3. Blynk support for Node.js:
+    
+    mkdir <dir_name>
+    (create a new directory with the files for your blynk project)
+    cd <dir_name/>
+    
+    npm init
+    npm install blynk-library --save
+    npm install onoff --save
+    sudo nano <index.js>
+    
+  4. Run the project with
+    node index.js
+      OR
+    sudo NODE_PATH=/usr/local/lib/node_modules node ./<index.js>
+    (if u wanna include some modules like for the DHT11)
