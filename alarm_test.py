@@ -1,4 +1,4 @@
-#!/bin/
+#!/usr/bin/python
 # Script: alarm_test.py
 # Purpose: test the PIR sensor with a buzzer
 # -------------------------------
