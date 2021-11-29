@@ -129,4 +129,8 @@ wpa_pairwise=TKIP
 rsn_pairwise=CCMP
 <==========END OF FILE=================>
 
+10. Setup script to start at boot (through a service)
+  
+    https://raspberrypi.stackexchange.com/questions/78991/running-a-script-after-an-internet-connection-is-established
+    
 
