@@ -1,0 +1,13 @@
+Connection / Network commands
+
+man ip
+man nmcli
+man lshw
+
+sudo lshw -class network -short                    check network interfaces and their paths
+ip a                                               check ip adresses for each interface
+ip a s [network interface] | grep state            check ip of that interface (and state)
+nmcli dev wifi                                     check available wifi networks
+wavemon                                            info of current wifi connection
+
+
