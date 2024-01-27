@@ -11,4 +11,16 @@ ip route                                           check the route
 nmcli dev wifi                                     check available wifi networks
 wavemon                                            info of current wifi connection
 
+Useful Command Line Tools:
+- exa (better ls)
+- bat (better code browsing)
+- Ripgrep (better grep)
+- FZF (fuzzy filename search)
+- Zoxide (better cd)
+- Entr (executes code changes on the press of Enter)
+- Midnight Commander (file manager)
+
+
+
+
 
